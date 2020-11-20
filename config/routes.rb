@@ -1,3 +1,7 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  resources :stores do
+    collection do
+      resources :stores, path: 'local', as: 'local_store', type: 'Store::LocalStore', controller: 'stores'
+    end
+  end
 end
