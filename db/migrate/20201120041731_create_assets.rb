@@ -10,5 +10,6 @@ class CreateAssets < ActiveRecord::Migration[6.0]
     end
 
     add_index :assets, [:task_id, :task_type]
+    add_index :assets, :store_id
   end
 end

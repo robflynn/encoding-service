@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2020_11_20_041731) do
     t.string "file_path"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["store_id"], name: "index_assets_on_store_id"
     t.index ["task_id", "task_type"], name: "index_assets_on_task_id_and_task_type"
   end
 
