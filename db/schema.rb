@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_20_025744) do
+ActiveRecord::Schema.define(version: 2020_11_20_040520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "encoding_tasks", force: :cascade do |t|
+    t.string "name"
+    t.string "status", default: "created"
+    t.bigint "output_store_id", null: false
+    t.string "output_path"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["output_store_id"], name: "index_encoding_tasks_on_output_store_id"
+    t.index ["status"], name: "index_encoding_tasks_on_status"
+  end
 
   create_table "stores", force: :cascade do |t|
     t.string "type"
@@ -24,4 +35,5 @@ ActiveRecord::Schema.define(version: 2020_11_20_025744) do
     t.index ["type"], name: "index_stores_on_type"
   end
 
+  add_foreign_key "encoding_tasks", "stores", column: "output_store_id"
 end
