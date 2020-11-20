@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :assets
   resources :stores do
     collection do
       resources :stores, path: 'local', as: 'local_store', type: 'Store::LocalStore', controller: 'stores'

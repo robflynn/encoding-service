@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_20_040520) do
+ActiveRecord::Schema.define(version: 2020_11_20_041731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "assets", force: :cascade do |t|
+    t.integer "task_id"
+    t.string "task_type"
+    t.integer "store_id"
+    t.string "file_path"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["task_id", "task_type"], name: "index_assets_on_task_id_and_task_type"
+  end
 
   create_table "encoding_tasks", force: :cascade do |t|
     t.string "name"
