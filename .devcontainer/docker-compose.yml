@@ -1,0 +1,48 @@
+version: '3'
+
+volumes:
+  bundle:
+  node_modules:
+  gem_documentation:
+  postgres_data:
+
+services:
+  app:
+    user: vscode
+
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+      args:
+        VARIANT: 2.7
+        USER_UID: 1000
+        USER_GID: 1000
+        NODE_VERSION: v14
+
+    volumes:
+      - ..:/workspace:cached
+      - $HOME/.ssh:/home/vscode/.ssh
+      - bundle:/usr/local/bundle/
+      - node_modules:/workspace/node_modules
+      - $HOME/.yard:/home/vscode/.yard
+
+    command: sleep infinity
+
+    environment:
+      SA_PASSWORD: "LocalPassword"
+      OPENSSL_CONF: "/etc/ssl"
+
+    links:
+      - db
+
+  db:
+    image: postgres
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    ports:
+      - 5432:5432
+
+    environment:
+      POSTGRES_PASSWORD: LocalPassword

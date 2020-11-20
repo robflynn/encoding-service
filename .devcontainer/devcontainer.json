@@ -1,0 +1,33 @@
+{
+	"name": "encoding-service",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspace",
+	// Set *default* container specific settings.json values on container create.
+	"settings": {
+      "terminal.integrated.shell.linux": "/bin/bash",
+      "[ruby]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2
+
+      },
+      "solargraph.commandPath": "/usr/local/bundle/bin/solargraph",
+      "solargraph.bundlerPath": "/usr/local/bin/bundle",
+	},
+
+	// Add the IDs of extensions you want to be installed when the container is created.
+	"extensions": [
+      "rebornix.Ruby",
+      "castwide.solargraph",
+			"groksrc.ruby",
+			"wwm.better-align"
+	],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [5000, 3035, 35729],
+
+	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+  "remoteUser": "vscode",
+
+  "postCreateCommand": "bundle install && solargraph bundle && yarn install"
+}
