@@ -14,4 +14,8 @@
 #  index_stores_on_type  (type)
 #
 class Store < ApplicationRecord
+  validates :name, presence: true
+
+  def download(asset, to:)
+  end
 end
