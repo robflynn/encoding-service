@@ -4,7 +4,7 @@ RSpec.describe StoresController, type: :controller do
     describe "Stores API", type: :request do
       describe 'GET /api/stores' do
         before do
-          FactoryBot.create(:store, name: 'Local Store', type: 'Store::LocalStore', configuration: { base_path: 'test' } )
+          FactoryBot.create(:store, name: 'Local Store', type: 'Store::LocalStore', configuration: { base_path: 'test' }.to_json )
         end
 
         it 'returns all stores' do
@@ -28,7 +28,7 @@ RSpec.describe StoresController, type: :controller do
       end
 
       describe 'DELETE /api/stores/:id' do
-        let!(:store) { FactoryBot.create(:store, name: 'Local Store', type: 'Store::LocalStore', configuration: { base_path: 'test' } ) }
+        let!(:store) { FactoryBot.create(:store, name: 'Local Store', type: 'Store::LocalStore', configuration: { base_path: 'test' }.to_json ) }
 
         it 'deletes a store' do
           expect {
