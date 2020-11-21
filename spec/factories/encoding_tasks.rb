@@ -23,28 +23,22 @@
 #  fk_rails_7f0d6c5bbc  (profile_id => encoding_profiles.id)
 #  fk_rails_e011257813  (output_store_id => stores.id)
 #
-class EncodingTask < ApplicationRecord
-  enum status: {
-    created: "created",
-    queued: "queued",
-    validating: "validating",
-    downloading: "downloading",
-    finished: "finished",
-    error: "error"
-  }
+FactoryBot.define do
+  factory :encoding_task do
+    name { "Sample Encode Task" }
 
-  belongs_to :output_store, class_name: 'Store'
-  belongs_to :profile, class_name: 'EncodingProfile'
-  has_many   :assets
+    trait :with_s3_store do
+      output_store { build(:s3_store) }
+    end
 
-  validates :encoding_profile, presence: true
-  validates :output_store, presence: true
+    trait :with_test_profile do
+      profile { build(:encoding_profile, :with_renditions) }
+    end
 
-  def renditions_completed?
-    num_renditions == completed_renditions
-  end
+    trait :with_test_assets do
 
-  def num_renditions
-    @num_renditions ||= renditions.count
+    end
+
+    Rails.application.credentials.store_secret_key
   end
 end
