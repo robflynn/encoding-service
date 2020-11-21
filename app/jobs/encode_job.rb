@@ -1,9 +1,7 @@
 class EncodeJob < ApplicationJob
-  queue_as :encode
+  queue_as :default
 
-  def perform(task)
-    raise "Invalid task type" unless task.is_a? EncodingTask
-
-
+  def perform(*args)
+    # Do something later
   end
 end
