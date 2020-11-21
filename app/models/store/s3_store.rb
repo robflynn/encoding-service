@@ -20,11 +20,15 @@ class Store::S3Store < Store
   end
 
   def bucket_name
-    configuration['bucket']
+    configuration[:bucket]
   end
 
   def access_key_id
-    configuration['access_key_id']
+    configuration[:access_key_id]
+  end
+
+  def region
+    configuration[:region]
   end
 
   def download_file(file_path, to:, as:)
@@ -48,14 +52,10 @@ protected
     }
   end
 
-  def self.secure_fields
-    ['secret_access_key']
-  end
-
 private
 
   def secret_access_key
-    configuration['secret_access_key']
+    configuration[:secret_access_key]
   end
 
   def client

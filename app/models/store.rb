@@ -18,7 +18,7 @@ require 'memoist'
 class Store < ApplicationRecord
   extend Memoist
 
-  before_save :encrypt_secure_fields
+  before_save :encrypt_configuration
 
   validates :name, presence: true
   validates :type, presence: true
@@ -27,7 +27,7 @@ class Store < ApplicationRecord
   #validate :valid_configuration
 
   def configuration
-    @decrypted_configuration ||= decrypt_secure_fields
+    @decrypted_configuration ||= decrypt_configuration
   end
 
   def configuration=(value)
@@ -58,10 +58,6 @@ class Store < ApplicationRecord
 
 protected
 
-  def self.secure_fields
-    []
-  end
-
   def self.default_configuration
     {}
   end
@@ -72,43 +68,22 @@ protected
 
 private
 
-  def decrypt_secure_fields
+  def decrypt_configuration
     store_class = self.class == Store ? self.class : self.type.constantize
     default_config = store_class.default_configuration
+    encrypted_configuration = Base64.decode64(secured_configuration)
+    serialized_configuration = Encryption.decrypt(encrypted_configuration)
 
-    return default_config unless secured_configuration.present?
+    config = Marshal.load(serialized_configuration)
 
-    decrypted_config = default_config.merge(JSON.parse(secured_configuration))
-    secure_fields = store_class.secure_fields
-
-    secure_fields.each do |field|
-      next unless decrypted_config[field.to_sym].present?
-
-      decrypted_config[field.to_sym] = Encryption.decrypt(Base64.decode64(decrypted_config[field]))
-    end
-
-    decrypted_config
+    default_config.merge(config)
   end
 
-  def encrypt_secure_fields
-    encrypted_config = configuration.stringify_keys
+  def encrypt_configuration
+    serialized_configuration = Marshal.dump(configuration)
+    encrypted_config = Base64.encode64(Encryption.encrypt(serialized_configuration))
 
-    puts "The unencrypted", encrypted_config
-
-    secure_fields = self.type.constantize.secure_fields
-
-    secure_fields.each do |field|
-      puts "Checking #{field}"
-      next unless encrypted_config[field].present?
-
-      puts "Securing field: #{field}"
-
-      encrypted_value = Base64.encode64(Encryption.encrypt(encrypted_config[field]))
-
-      encrypted_config[field] = encrypted_value
-    end
-
-    self.secured_configuration = encrypted_config.to_json
+    self.secured_configuration = encrypted_config
   end
 
   def valid_configuration
