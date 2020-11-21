@@ -1,5 +1,5 @@
 class EncodeJob < ApplicationJob
-  queue_as :default
+  queue_as :encode
 
   def perform(task:)
     # TODO: Implement `InvalidTaskType` or handle this some other way

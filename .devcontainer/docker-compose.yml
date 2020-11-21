@@ -5,6 +5,7 @@ volumes:
   node_modules:
   gem_documentation:
   postgres_data:
+  redis:
 
 services:
   app:
@@ -34,6 +35,7 @@ services:
 
     links:
       - db
+      - redis
 
   db:
     image: postgres
@@ -46,3 +48,11 @@ services:
 
     environment:
       POSTGRES_PASSWORD: LocalPassword
+
+  redis:
+    image: 'redis:5.0-buster'
+
+    command: redis-server --requirepass RedisPassword
+
+    volumes:
+      - 'redis:/data'
