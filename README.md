@@ -1,24 +1,7 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+app/models/store.rb:
+  * [39] [TODO] Implement `InvalidConfigurationError`
 
-Things you may want to cover:
+app/models/store/s3_store.rb:
+  * [50] [TODO] Implement `FileMissingError`
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

@@ -76,11 +76,6 @@ private
   end
 
   def client
-    # TODO: Add `region` `Store::S3Store` configuration
-    region = Region::US_EAST_1
-
-    puts region, access_key_id, secret_access_key
-
     Aws::S3::Client.new(
       region: region,
       access_key_id: access_key_id,
