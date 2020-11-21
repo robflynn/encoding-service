@@ -14,9 +14,12 @@ FactoryBot.define do
     description { "This is a test profile." }
 
     trait :with_renditions do
-      before(:create) do |profile|
-        profile.renditions << build(:rendition, profile: profile)
-      end
+      renditions {
+        [
+          build(:rendition_sd),
+          build(:rendition_hd)
+        ]
+      }
     end
   end
 end

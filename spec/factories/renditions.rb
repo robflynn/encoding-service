@@ -34,6 +34,14 @@ FactoryBot.define do
     profile     { 'main' }
     audio_codec { 'aac' }
 
+    factory :rendition_hd do
+      video_bitrate { 5000 }
+      audio_bitrate { 128 }
+      name { "720p @ 5mbps" }
+      width { 1280 }
+      height { 720 }
+    end
+
     factory :rendition_sd do
       video_bitrate { 2000 }
       audio_bitrate { 128 }
