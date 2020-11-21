@@ -16,6 +16,6 @@
 #  index_assets_on_task_id_and_task_type  (task_id,task_type)
 #
 class Asset < ApplicationRecord
-#  belongs_to :task, polymorphic: true
+  belongs_to :task, polymorphic: true
   belongs_to :store
 end

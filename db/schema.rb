@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_20_041731) do
+ActiveRecord::Schema.define(version: 2020_11_21_002054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2020_11_20_041731) do
   create_table "stores", force: :cascade do |t|
     t.string "type"
     t.string "name"
-    t.text "configuration", default: "{}"
+    t.text "secured_configuration", default: "{}"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["type"], name: "index_stores_on_type"
