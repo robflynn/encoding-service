@@ -1,5 +1,6 @@
 module Encode
   class Flow < Micro::Case
-    flow Encode::ValidateAssets
+    flow Encode::ValidateAssets,
+         Encode::DownloadAssets
   end
 end

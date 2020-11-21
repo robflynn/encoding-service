@@ -20,5 +20,14 @@
 #  fk_rails_e011257813  (output_store_id => stores.id)
 #
 class EncodingTask < ApplicationRecord
+  enum status: {
+    created: "created",
+    queued: "queued",
+    validating: "validating",
+    downloading: "downloading",
+    finished: "finished",
+    error: "error"
+  }
+
   belongs_to :output_store, class_name: 'Store'
 end

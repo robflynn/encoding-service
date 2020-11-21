@@ -1,15 +1,15 @@
 require 'u-case/with_activemodel_validation'
 
 module Encode
-  class ValidateAssets < Micro::Case
+  class DownloadAssets < Micro::Case
     attribute :task
 
     validates :task, kind: EncodingTask
 
     def call!
-      task.validating!
+      task.downloading!
 
-      # TODO: Implement `Encode::ValidateAssets`
+      # TODO: Implement `Encode::DownloadAssets`
       return Success { { task: task }}
     end
   end
