@@ -56,6 +56,10 @@ class Store < ApplicationRecord
     raise "Not Implemented"
   end
 
+  def upload_file(file_path, to:, as:)
+    raise "Not Implemented"
+  end
+
 protected
 
   def self.default_configuration

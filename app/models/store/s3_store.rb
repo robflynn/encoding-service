@@ -37,13 +37,25 @@ class Store::S3Store < Store
 
   def download_file(file_path, to:, as:)
     target_folder = ensure_path(to)
-    target_path = to.join(as).to_s
+    target_path = Pathname.new(to.to_s).join(as).to_s
 
     response = client.get_object bucket: bucket_name,
                                  key: file_path,
                                  response_target: target_path
 
     return Pathname.new(self.base_path).join(to, as).to_s.gsub(/^\//, "")
+  end
+
+  def upload_file(file_path, to:, as:)
+    # TODO: Implement `FileMissingError`
+    raise FileMissingError unless File.exist? file_path
+
+    target_folder = to.to_s
+    target_path = Pathname.new(to).join(as).to_s
+
+    response = client.put_object bucket: bucket_name,
+                                 body: File.open(file_path.to_s, "rb"),
+                                 key: target_path
   end
 
 protected
