@@ -99,6 +99,7 @@ GEM
       activesupport (>= 5.0.0)
     jmespath (1.4.0)
     json (2.3.1)
+    kind (3.1.0)
     listen (3.3.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -192,6 +193,11 @@ GEM
     thread_safe (0.3.6)
     tzinfo (1.2.8)
       thread_safe (~> 0.1)
+    u-attributes (2.6.0)
+      kind (>= 3.0, < 5.0)
+    u-case (4.2.1)
+      kind (>= 3.0, < 5.0)
+      u-attributes (~> 2.0)
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -208,6 +214,7 @@ DEPENDENCIES
   encryption
   factory_bot_rails
   jbuilder
+  kind
   listen (~> 3.2)
   memoist
   pg (>= 0.18, < 2.0)
@@ -218,6 +225,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
+  u-case
 
 RUBY VERSION
    ruby 2.7.2p137
