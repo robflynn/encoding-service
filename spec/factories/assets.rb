@@ -17,5 +17,6 @@
 #
 FactoryBot.define do
   factory :video_asset, class: 'Asset' do
+    file_path { "test.mp4" }
   end
 end

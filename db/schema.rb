@@ -40,10 +40,10 @@ ActiveRecord::Schema.define(version: 2020_11_21_222017) do
     t.string "output_path"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "profile_id", null: false
+    t.bigint "encoding_profile_id", null: false
     t.integer "completed_renditions"
+    t.index ["encoding_profile_id"], name: "index_encoding_tasks_on_encoding_profile_id"
     t.index ["output_store_id"], name: "index_encoding_tasks_on_output_store_id"
-    t.index ["profile_id"], name: "index_encoding_tasks_on_profile_id"
     t.index ["status"], name: "index_encoding_tasks_on_status"
   end
 
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 2020_11_21_222017) do
     t.index ["type"], name: "index_stores_on_type"
   end
 
-  add_foreign_key "encoding_tasks", "encoding_profiles", column: "profile_id"
+  add_foreign_key "encoding_tasks", "encoding_profiles"
   add_foreign_key "encoding_tasks", "stores", column: "output_store_id"
   add_foreign_key "renditions", "encoding_profiles"
 end
