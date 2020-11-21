@@ -5,13 +5,18 @@ class EncodeJob < ApplicationJob
     # TODO: Implement `InvalidTaskType` or handle this some other way
     raise InvalidTaskType unless task.is_a? EncodingTask
 
-    Encode::Flow.call(task: task)
-    .on_success {
-      task.finished!
-    }
-    .on_failure { |error|
-      puts "The error: ", error
-      task.error!
-    }
+    Encode::ValidateAssets.call(task: task)
+      .on_failure { |(task, error)| handle_error(task, error) }
+
+    Encode::DownloadAssets.call(task: task)
+      .on_failure { |(task, error)| handle_error(task, error) }
+
+
+  end
+
+private
+
+  def handle_error(task, error)
+    task.error!
   end
 end

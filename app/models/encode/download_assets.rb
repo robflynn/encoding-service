@@ -9,6 +9,8 @@ module Encode
     def call!
       task.downloading!
 
+      # return Failure :invalid_asset, result: attributes(:task)
+
       # TODO: Implement `Encode::DownloadAssets`
       return Success { { task: task }}
     end

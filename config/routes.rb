@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :renditions
   scope :api do
     resources :assets, path: 'assets'
 

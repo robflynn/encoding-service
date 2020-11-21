@@ -9,6 +9,8 @@ module Encode
     def call!
       task.validating!
 
+      # return Failure :invalid_asset, result: attributes(:task)
+
       # TODO: Implement `Encode::ValidateAssets`
       return Success { { task: task }}
     end

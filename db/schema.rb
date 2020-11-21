@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_21_002054) do
+ActiveRecord::Schema.define(version: 2020_11_21_205807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,13 @@ ActiveRecord::Schema.define(version: 2020_11_21_002054) do
     t.index ["task_id", "task_type"], name: "index_assets_on_task_id_and_task_type"
   end
 
+  create_table "encoding_profiles", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "encoding_tasks", force: :cascade do |t|
     t.string "name"
     t.string "status", default: "created"
@@ -33,8 +40,28 @@ ActiveRecord::Schema.define(version: 2020_11_21_002054) do
     t.string "output_path"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "profile_id", null: false
     t.index ["output_store_id"], name: "index_encoding_tasks_on_output_store_id"
+    t.index ["profile_id"], name: "index_encoding_tasks_on_profile_id"
     t.index ["status"], name: "index_encoding_tasks_on_status"
+  end
+
+  create_table "renditions", force: :cascade do |t|
+    t.bigint "encoding_profile_id", null: false
+    t.string "name"
+    t.string "description"
+    t.integer "width"
+    t.integer "height"
+    t.decimal "fps", precision: 5, scale: 2
+    t.integer "video_bitrate"
+    t.integer "audio_bitrate"
+    t.string "container", limit: 16, default: "mp4"
+    t.string "video_codec", limit: 8, default: "h264"
+    t.string "profile", limit: 16, default: "main"
+    t.string "audio_codec", limit: 8, default: "aac"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["encoding_profile_id"], name: "index_renditions_on_encoding_profile_id"
   end
 
   create_table "stores", force: :cascade do |t|
@@ -46,5 +73,7 @@ ActiveRecord::Schema.define(version: 2020_11_21_002054) do
     t.index ["type"], name: "index_stores_on_type"
   end
 
+  add_foreign_key "encoding_tasks", "encoding_profiles", column: "profile_id"
   add_foreign_key "encoding_tasks", "stores", column: "output_store_id"
+  add_foreign_key "renditions", "encoding_profiles"
 end
