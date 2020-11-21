@@ -31,15 +31,19 @@ class Store::S3Store < Store
     configuration[:region]
   end
 
+  def base_path
+    configuration[:base_path]
+  end
+
   def download_file(file_path, to:, as:)
     target_folder = ensure_path(to)
-    target_path = to.to_s
+    target_path = to.join(as).to_s
 
     response = client.get_object bucket: bucket_name,
                                  key: file_path,
                                  response_target: target_path
 
-    return Pathname.new(self.base_path).join(to, as).to_s.gsub(/^\//, //)
+    return Pathname.new(self.base_path).join(to, as).to_s.gsub(/^\//, "")
   end
 
 protected
@@ -48,7 +52,8 @@ protected
     {
       access_key_id: nil,
       secret_access_key: nil,
-      region: Region::US_EAST_1
+      region: Region::US_EAST_1,
+      base_path: ''
     }
   end
 
