@@ -12,6 +12,7 @@ module Encode
     end
 
     def extract_audio(input:, output:)
+      # TODO: Make sure this path exists before you tr y o write to it...
       cmd = "ffmpeg -y -i #{input} -vn -c:a copy #{output}"
 
       puts "Extracting audio..."

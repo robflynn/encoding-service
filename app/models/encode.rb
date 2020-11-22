@@ -10,4 +10,10 @@ module Encode
   def self.output_path(task)
     processing_path(task).join("output")
   end
+
+  def self.ensure_path(path)
+    FileUtils.mkdir_p(path) unless File.exists? path
+
+    Pathname.new(path)
+  end
 end

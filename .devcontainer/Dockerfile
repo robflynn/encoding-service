@@ -17,7 +17,8 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
      vim \
      htop \
      unzip \
-     ffmpeg
+     ffmpeg \
+     gpac
 
 EXPOSE 35729
 

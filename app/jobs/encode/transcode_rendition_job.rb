@@ -41,9 +41,23 @@ class Encode::TranscodeRenditionJob < ApplicationJob
     puts "Gonna call it"
     Encode::TranscodeVideo.call(input: source_path, output_folder: output_folder, rendition: rendition)
       .on_failure { |q| puts "ERROR", q }
-      .on_success { puts "ffmpeg was a success" }
+      .on_success {
+        chunk_folder = Encode.ensure_path(Encode.output_path(task).join("dash"))
+        chunk_rendition_fmp4(input: "#{output_folder}/file.mp4", output_folder: chunk_folder)
+      }
+
+    chunk_folder = Encode.ensure_path(Encode.output_path(task).join("dash"))
+    chunk_rendition_fmp4(input: "#{output_folder}/file.mp4", output_folder: chunk_folder)
 
     puts "It should have called it"
+  end
+
+  def chunk_rendition_fmp4(input:, output_folder:)
+    puts "Chunking: input: #{input}"
+    puts "Output folder: #{output_folder}"
+
+    cmd = "MP4Box -dash 4000 -frag 4000 -rap -out #{output_folder}/manifest -segment-name #{output_folder}/segment_ #{input}"
+    puts cmd
   end
 
 end

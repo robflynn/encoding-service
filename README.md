@@ -4,9 +4,13 @@ app/jobs/encode/transcode_rendition_job.rb:
 
 app/jobs/encode_job.rb:
   * [ 5] [TODO] Implement `InvalidTaskType` or handle this some other way
+  * [14] [TODO] Get specifically the video or audio asset here, if we handle creation that way
 
 app/models/encode/download_assets.rb:
   * [14] [TODO] Implement `Encode::DownloadAssets`
+
+app/models/encode/extract_audio.rb:
+  * [15] [TODO] Make sure this path exists before you tr y o write to it...
 
 app/models/encode/transcode_video.rb:
   * [15] [TODO] Track rendition status?
