@@ -33,11 +33,17 @@ class Encode::TranscodeRenditionJob < ApplicationJob
     input_folder = File.dirname(source_path)
     filename = File.basename(source_path)
 
-    output_folder = Rails.root.join("tmp", "processing", "#{task.id}", "output", "renditions", "#{rendition.id}")
+    output_folder = Rails.root.join("tmp", "processing", "#{task.id}", "output", "renditions", "#{rendition.id}").to_s
     FileUtils.mkdir_p(output_folder) unless File.exists? output_folder
 
     # Transcode the video
     # TODO: Handle failure of TranscodeVideo
+    puts "Gonna call it"
     Encode::TranscodeVideo.call(input: source_path, output_folder: output_folder, rendition: rendition)
+      .on_failure { |q| puts "ERROR", q }
+      .on_success { puts "ffmpeg was a success" }
+
+    puts "It should have called it"
   end
+
 end

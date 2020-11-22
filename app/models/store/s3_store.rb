@@ -43,7 +43,7 @@ class Store::S3Store < Store
                                  key: file_path,
                                  response_target: target_path
 
-    return Pathname.new(self.base_path).join(to, as).to_s.gsub(/^\//, "")
+    return Pathname.new(self.base_path).join(to, as)
   end
 
   def upload_file(file_path, to:, as:)

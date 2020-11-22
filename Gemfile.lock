@@ -99,7 +99,6 @@ GEM
     jbuilder (2.10.1)
       activesupport (>= 5.0.0)
     jmespath (1.4.0)
-    json (2.3.1)
     kind (3.1.0)
     listen (3.3.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -121,6 +120,7 @@ GEM
     nio4r (2.5.4)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
+    open3 (0.1.0)
     pg (1.2.3)
     puma (4.3.6)
       nio4r (~> 2.0)
@@ -179,11 +179,10 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
-    simplecov (0.16.1)
+    simplecov (0.19.1)
       docile (~> 1.1)
-      json (>= 1.8, < 3)
-      simplecov-html (~> 0.10.0)
-    simplecov-html (0.10.2)
+      simplecov-html (~> 0.11)
+    simplecov-html (0.12.3)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -223,6 +222,7 @@ DEPENDENCIES
   kind
   listen (~> 3.2)
   memoist
+  open3
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.4)

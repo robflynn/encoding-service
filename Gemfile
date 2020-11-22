@@ -30,6 +30,7 @@ gem 'encryption'
 gem 'u-case'
 gem 'kind'
 
+gem 'open3'
 gem 'sidekiq', '~> 6.1.0'
 
 group :development, :test do
