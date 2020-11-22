@@ -47,7 +47,7 @@ FactoryBot.define do
       name { "Sample Encode Task" }
       with_s3_store
       with_test_profile
-      with_test_profile
+      with_test_assets
     end
 
     after(:build) do |task|

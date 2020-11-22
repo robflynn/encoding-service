@@ -82,5 +82,4 @@ private
       secret_access_key: secret_access_key
     )
   end
-  memoize :client
 end

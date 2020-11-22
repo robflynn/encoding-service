@@ -49,7 +49,11 @@ class Store < ApplicationRecord
 
     as = File.basename(asset.file_path) if as.nil?
 
-    return self.download_file(asset.file_path, to: to, as: as)
+    asset_path = File.join(self.configuration[:base_path], asset.file_path).to_s.gsub(/^\//, "")
+
+    puts "Gonna download to: #{to} as: #{as}"
+
+    return self.download_file(asset_path, to: to, as: as)
   end
 
   def download_file(file_path, to:, as:)

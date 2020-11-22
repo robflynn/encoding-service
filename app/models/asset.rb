@@ -18,4 +18,8 @@
 class Asset < ApplicationRecord
   belongs_to :task, polymorphic: true
   belongs_to :store
+
+  def download(to:, as: nil)
+    self.store.download(self, to: to, as: as)
+  end
 end

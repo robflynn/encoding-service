@@ -15,7 +15,8 @@ RUN chown vscode:vscode /workspace/node_modules
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
      && apt-get -y install --no-install-recommends \
      vim \
-     htop
+     htop \
+     ffmpeg
 
 EXPOSE 35729
 
