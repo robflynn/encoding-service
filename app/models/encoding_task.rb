@@ -28,6 +28,7 @@ class EncodingTask < ApplicationRecord
     created: "created",
     queued: "queued",
     validating: "validating",
+    processing: "processing",
     downloading: "downloading",
     finished: "finished",
     error: "error"
@@ -35,7 +36,9 @@ class EncodingTask < ApplicationRecord
 
   belongs_to :output_store, class_name: 'Store'
   belongs_to :encoding_profile
-  has_many   :assets, as: :task
+
+  has_many   :assets, as: :task, dependent: :destroy
+  has_many   :renditions, through: :encoding_profile
 
   validates :encoding_profile, presence: true
   validates :output_store, presence: true

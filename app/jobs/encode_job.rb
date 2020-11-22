@@ -8,6 +8,9 @@ class EncodeJob < ApplicationJob
     Encode::ValidateAssets.call(task: task)
       .on_failure { |(task, error)| handle_error(task, error) }
 
+    task.completed_renditions = 0
+    task.processing!
+
     task.renditions.each do |rendition|
       Encode::TranscodeRenditionJob.perform_later task: task, rendition: rendition
     end

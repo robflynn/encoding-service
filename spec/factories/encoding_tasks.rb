@@ -24,7 +24,7 @@
 #  fk_rails_e011257813  (output_store_id => stores.id)
 #
 FactoryBot.define do
-  factory :encoding_task do |task|
+  factory :encoding_task do
     name { "Sample Encode Task" }
 
     trait :with_s3_store do
@@ -41,6 +41,13 @@ FactoryBot.define do
           build(:video_asset)
         ]
       }
+    end
+
+    factory :encoding_task_full, class: "EncodingTask" do
+      name { "Sample Encode Task" }
+      with_s3_store
+      with_test_profile
+      with_test_profile
     end
 
     after(:build) do |task|
