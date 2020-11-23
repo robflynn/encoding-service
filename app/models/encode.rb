@@ -18,5 +18,9 @@ module Encode
     Pathname.new(path)
   end
 
+  def self.task_rendition_temp_path(task, rendition)
+    Encode.ensure_path(output_path(task).join("renditions", "#{rendition.id}"))
+  end
+
   SegmentDuration = 2.seconds
 end

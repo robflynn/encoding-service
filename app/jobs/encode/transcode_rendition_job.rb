@@ -27,15 +27,16 @@ class Encode::TranscodeRenditionJob < ApplicationJob
 
     asset = task.assets.first
 
-    tmp_folder = Rails.root.join("tmp", "processing", "#{task.id}")
-    FileUtils.mkdir_p(tmp_folder) unless File.exists? tmp_folder
+    tmp_folder = Encode.processing_path(task)
 
     source_path = asset.download(to: tmp_folder)
 
     input_folder = File.dirname(source_path)
     filename = File.basename(source_path)
 
-    output_folder = Rails.root.join("tmp", "processing", "#{task.id}", "output", "renditions", "#{rendition.id}").to_s
+    #output_folder = Encode.ensure_path(Encode.processing_path(task).join("output", "dash", "video", "#{rendition.resolution}_#{rendition.bitrate_bps}")).to_s
+    output_folder = Encode.task_rendition_temp_path(task, rendition)
+
     FileUtils.mkdir_p(output_folder) unless File.exists? output_folder
 
     # Transcode the video
@@ -44,8 +45,8 @@ class Encode::TranscodeRenditionJob < ApplicationJob
     Encode::TranscodeVideo.call(input: source_path, output_folder: output_folder, rendition: rendition)
       .on_failure { |q| puts "ERROR", q }
       .on_success {
-        chunk_folder = Encode.ensure_path(Encode.output_path(task).join("renditions", "#{rendition.id}", "dash"))
-        chunk_rendition_fmp4(input: "#{output_folder}/file.mp4", output_folder: chunk_folder)
+        chunk_folder = Encode.output_path(task).join("dash", "video", "#{rendition.resolution}_#{rendition.bitrate_bps}")
+        chunk_rendition_fmp4(input: source_path, output_folder: chunk_folder)
       }
 
     puts "It should have called it"

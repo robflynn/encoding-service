@@ -17,7 +17,7 @@ FactoryBot.define do
       renditions {
         [
           build(:rendition_sd),
-#          build(:rendition_hd)
+          # build(:rendition_hd)
         ]
       }
     end
