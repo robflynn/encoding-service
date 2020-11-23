@@ -32,6 +32,7 @@ module Manifest
         ) {
             xml.Period(id: SecureRandom.uuid, start: "P0S") {
               video_adaptation_set(xml)
+              audio_adaptation_set(xml)
             }
           }
       end
@@ -43,6 +44,24 @@ module Manifest
 
     def iso_time(time)
       time.strftime("%Y-%m-%dT%H:%M:%SZ")
+    end
+
+    def audio_adaptation_set(xml, lang: :en)
+      # TODO: Don't hard code audio codec in `Manifest::Dash`
+      xml.AdaptationSet(mimeType: "audio/mp4", codecs: "mp4a.40.2", lang: lang)
+      xml.AudioChannelConfiguration schemeIdUri: "urn:mpeg:dash:23003:3:audio_channel_configuration:2011",
+                                    value: 2
+      xml.SegmentTemplate(
+        media: "../audio/$RepresentationID$/dash/segment_$Number$.m4s",
+        initialization: "../audio/$RepresentationID$/dash/init.mp4",
+        duration: SEGMENT_DURATION,
+        startNumber: 0,
+        timescale: DEFAULT_TIMESCALE
+      )
+
+      # TODO: Implement multiple audio bitrate support in `Encode::Manifest`
+      # TODO: Don't hard code audio bitrate`Encode::Manifest`
+      xml.Representation id: "audio", bandwidth: 160000, audioSamplingRate: 44100
     end
 
     def video_adaptation_set(xml)

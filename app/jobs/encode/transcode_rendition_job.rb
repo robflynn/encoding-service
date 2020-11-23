@@ -46,18 +46,11 @@ class Encode::TranscodeRenditionJob < ApplicationJob
       .on_failure { |q| puts "ERROR", q }
       .on_success {
         chunk_folder = Encode.output_path(task).join("dash", "video", "#{rendition.resolution}_#{rendition.bitrate_bps}")
-        chunk_rendition_fmp4(input: source_path, output_folder: chunk_folder)
+        Encode.ensure_path(chunk_folder)
+
+        Encode::ChunkFragmentedMP4.call(input: source_path, output_folder: chunk_folder)
       }
 
     puts "It should have called it"
-  end
-
-  def chunk_rendition_fmp4(input:, output_folder:)
-    puts "Chunking: input: #{input}"
-    puts "Output folder: #{output_folder}"
-
-    cmd = "MP4Box -dash #{Encode::SegmentDuration.in_milliseconds} -frag #{Encode::SegmentDuration.in_milliseconds} -rap -frag-rap -out #{output_folder}/manifest -segment-name segment_ #{input}"
-    puts cmd
-    system(cmd)
   end
 end

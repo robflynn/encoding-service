@@ -25,6 +25,10 @@ class EncodeJob < ApplicationJob
       .on_failure { |(error)| puts "Was there an error extracking it?", error }
       .on_success { puts "audio extracted" }
 
+    # TODO: Configurable audio bitate?
+    chunk_folder = Encode.ensure_path(Encode.output_path(task).join("dash", "audio"))
+    Encode::ChunkFragmentedMP4.call(input: output, output_folder: chunk_folder)
+
     task.renditions.each do |rendition|
       Encode::TranscodeRenditionJob.perform_later task: task, rendition: rendition
     end

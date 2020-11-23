@@ -13,4 +13,9 @@
 # These inflection rules are supported but not enabled by default:
  ActiveSupport::Inflector.inflections(:en) do |inflect|
    inflect.acronym 'S3'
+   inflect.acronym 'MP4'
+   inflect.acronym 'FMP4'
+   inflect.acronym 'HLS'
+   inflect.acronym 'TS'
+   inflect.acronym 'MPEG'
  end
