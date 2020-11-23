@@ -7,13 +7,13 @@ module Encode
     validates :task, kind: EncodingTask
 
     def call!
-      generate_manifest
+      manifest = Manifest::Dash.new(task: task).to_mpd
+
+      tmppath = Encode.processing_path(task).join("manifest.created.mpd")
+
+      File.write(tmppath, manifest)
 
       return Success { { filename: output } }
-    end
-
-    def generate_manifest
-
     end
   end
 end

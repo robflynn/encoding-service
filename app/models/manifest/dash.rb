@@ -3,8 +3,7 @@ require 'builder'
 require 'nokogiri'
 
 module Manifest
-  # TODO: Make `Manifest::Dash` segment duration configurable. This will need to apply to the chunker as well.
-  SEGMENT_DURATION = 4000
+  SEGMENT_DURATION = Encode::SegmentDuration.in_milliseconds
 
   class Dash
     # TODO: Make `Manifest::Dash` timescale configurable?>

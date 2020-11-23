@@ -18,14 +18,15 @@ module Encode
       codec = ffmpeg_codec(rendition.video_codec)
       codec_options = "-profile:v #{rendition.profile} -f #{rendition.container}"
 
-      segment_duration = 10.seconds
-      segment_size = (segment_duration * rendition.fps).round
-
       bitrate_options = "-b:v #{rendition.video_bitrate}K"
 
       video_options = [
         '-movflags frag_keyframe+empty_moov+default_base_moof',
-        "-x264opts rc-lookahead=#{segment_size}"
+        "-x264opts rc-lookahead=60",
+        "-level 13",
+        "-keyint_min 30",
+        "-window_size 5",
+        "-g 60",
       ].join(' ')
 
       resolution = "#{rendition.width}x#{rendition.height}"

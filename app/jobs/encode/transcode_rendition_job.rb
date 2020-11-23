@@ -14,6 +14,8 @@ class Encode::TranscodeRenditionJob < ApplicationJob
 
     if task.renditions_completed?
       puts "All of the renditions have completed, Asynchronously."
+
+      Encode::CreateDashManifest.call task: task
     end
   end
 
@@ -53,7 +55,7 @@ class Encode::TranscodeRenditionJob < ApplicationJob
     puts "Chunking: input: #{input}"
     puts "Output folder: #{output_folder}"
 
-    cmd = "MP4Box -dash 4000 -frag 4000 -rap -out #{output_folder}/manifest -segment-name segment_ #{input}"
+    cmd = "MP4Box -dash #{Encode::SegmentDuration.in_milliseconds} -frag #{Encode::SegmentDuration.in_milliseconds} -rap -frag-rap -out #{output_folder}/manifest -segment-name segment_ #{input}"
     puts cmd
     system(cmd)
   end

@@ -17,4 +17,6 @@ module Encode
 
     Pathname.new(path)
   end
+
+  SegmentDuration = 2.seconds
 end
