@@ -20,6 +20,12 @@ FactoryBot.define do
     configuration { { base_path: 'test' }.to_json }
   end
 
+  factory :local_store, class: 'Store::LocalStore' do
+    type { "Store::LocalStore" }
+    name { "Local Store" }
+    configuration { { base_path: '' }.to_json }
+  end
+
   factory :s3_store, class: 'Store::S3Store' do
     type { "Store::S3Store" }
     name { "S3 Store "}

@@ -31,6 +31,10 @@ FactoryBot.define do
       output_store { build(:s3_store) }
     end
 
+    trait :with_local_store do
+      output_store { build(:local_store) }
+    end
+
     trait :with_test_profile do
       encoding_profile { build(:encoding_profile, :with_renditions) }
     end
