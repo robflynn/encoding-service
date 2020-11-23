@@ -22,6 +22,9 @@ gem 'jbuilder'
 
 gem 'memoist'
 
+# For handling ISO8601 durations
+gem 'ruby-duration'
+
 gem 'aws-sdk-s3'
 
 gem 'encryption'

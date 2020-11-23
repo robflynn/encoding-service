@@ -50,4 +50,9 @@ class EncodingTask < ApplicationRecord
   def num_renditions
     @num_renditions ||= renditions.count
   end
+
+  # TODO: Implement `EncodingTask` `duration`
+  def duration
+    10.seconds
+  end
 end
