@@ -6,6 +6,9 @@ app/jobs/encode_job.rb:
   * [ 5] [TODO] Implement `InvalidTaskType` or handle this some other way
   * [14] [TODO] Get specifically the video or audio asset here, if we handle creation that way
 
+app/models/encode.rb:
+  * [ 1] [TODO] I don't like calling `ensure_path` this much. Probably need to rethink the way path stuff works.
+
 app/models/encode/download_assets.rb:
   * [14] [TODO] Implement `Encode::DownloadAssets`
 
