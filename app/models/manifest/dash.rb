@@ -32,6 +32,7 @@ module Manifest
           "xmlns:mspr": "urn:microsoft:playready"
         ) {
             xml.Period(id: SecureRandom.uuid, start: "P0S") {
+              video_adaptation_set(xml)
             }
           }
       end
@@ -43,6 +44,31 @@ module Manifest
 
     def iso_time(time)
       time.strftime("%Y-%m-%dT%H:%M:%SZ")
+    end
+
+    def video_adaptation_set(xml)
+      xml.AdaptationSet(mimeType: "video/mp4") {
+        xml.SegmentTemplate(
+          media: "../video/$RepresentationID$/dash/segment_$Number$.m4s",
+          initialization: "../video/$RepresentationID$/dash/init.mp4",
+          duration: SEGMENT_DURATION,
+          startNumber: 0,
+          timescale: DEFAULT_TIMESCALE
+        )
+
+        representations(xml)
+      }
+    end
+
+    def representations(xml)
+      @encoding.renditions.each do |rendition|
+        xml.Representation id: "#{rendition.resolution}_#{rendition.bitrate_bps}",
+                           bandwidth: rendition.bitrate_bps,
+                           width: rendition.width,
+                           height: rendition.height,
+                           frameRate: rendition.fps,
+                           codecs: "avc1.4D001E"  # FIXME: Don't hardcode representation codec this
+      end
     end
 
     def builder

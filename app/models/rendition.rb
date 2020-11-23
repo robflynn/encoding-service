@@ -28,4 +28,12 @@
 #
 class Rendition < ApplicationRecord
   belongs_to :encoding_profile
+
+  def resolution
+    "#{width}x#{height}"
+  end
+
+  def bitrate_bps
+    video_bitrate * 1024
+  end
 end
